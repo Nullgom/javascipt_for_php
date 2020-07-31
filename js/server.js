@@ -1,15 +1,26 @@
 'use strict';
+(function() {
+    // code...
+}());
 var express = require("express");
 var app = express();
 
 var fs = require("fs");
 
-function hello(sender, punc) {
+
+var myvar = 100;
+
+function makeGreeter(greeting, punc) {
     punc = punc || "!!";
-    return "Hello from " + sender + punc;
+
+    return function(sender) {
+        return sender.trim() + " says " + greeting.trim() + punc.trim();
+    }
 }
+var hello = makeGreeter("hello");
+var howdy = makeGreeter("howdy partner, how are you", "?");
 app.get("/", function (req, res) {
-    res.send(hello("Javascript", "🤷‍♀👍"));
+    res.send(howdy("JS", "🤷‍♀👍"));
 
 });
 
