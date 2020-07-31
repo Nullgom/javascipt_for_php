@@ -22,17 +22,20 @@ app.get("/howdy/:from", function (req, res) {
 });
 
 app.get("/tweets/?(:id)?", function(req, res) {
-    var tweets = fs.readFileSync("../php/data/tweets.json").toString();
-    if(!req.params.id) {
-        res.send(tweets);
-        return;
-    }
-    var tweet = JSON.parse(tweets)[req.params.id];
-    tweet.id = req.params.id;
-    var getTweetJSON = Tweet.prototype.getJSON.bind(tweet);
+    fs.readFile("../php/data/tweets.json", function(error, result) {
+        if(error) {
+            res.send(error);
+            return;
+        }
+        var tweets = result.toString();
 
-    // res.send(Tweet.prototype.getJSON.call(tweet));
-    res.send(getTweetJSON());
-
+        if(!req.params.id) {
+            res.send(tweets);
+            return;
+        }
+        var tweet = JSON.parse(tweets)[req.params.id];
+        tweet.id = req.params.id;
+        res.send(Tweet.prototype.getJSON.call(tweet));
+    });
 });
 app.listen(3000);
