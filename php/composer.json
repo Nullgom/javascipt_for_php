@@ -1,0 +1,12 @@
+{
+    "name": "develer/php",
+    "description": "JavaScript for PHP",    
+    "require": {
+        "slim/slim" : "2.4.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "MyApp\\" : "myapp"
+        }
+    }
+}
